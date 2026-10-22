@@ -1,0 +1,24 @@
+# Internal / reference-only material (not part of the public site)
+RECON/
+NOTES.md
+brand-spec.md
+CLONE_AUDIT.md
+.file-versions/
+.od-skills/
+.vercelignore
+proper-company.html.artifact.json
+*.pdf
+프로퍼-최서원.jpeg
+스크린샷-*.png
+
+# Unused source assets
+assets/images/proper/orb.png
+assets/images/proper/orb-cutout.png
+assets/images/proper/cta-glow.jpg
+
+# Local tooling
+node_modules/
+.DS_Store
+.env
+.env.*
+index.html.artifact.json
