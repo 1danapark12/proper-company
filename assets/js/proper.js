@@ -210,7 +210,7 @@
     web: {
       title: "브랜드 웹사이트",
       cat: "Web Design",
-      img: "assets/images/proper/work-web.png",
+      img: "assets/images/proper/work-web.jpg",
       alt: "브랜드 웹사이트 디자인 예시",
       desc: "브랜드가 처음 마주하는 화면. 사용자 중심의 편안한 디자인과 명확한 정보 구조로 브랜드 경험을 완성합니다.",
       scope: "기획 · UI/UX · 퍼블리싱",
@@ -219,7 +219,7 @@
     package: {
       title: "패키지 디자인",
       cat: "Package Design",
-      img: "assets/images/proper/work-package.png",
+      img: "assets/images/proper/work-package.jpg",
       alt: "패키지 디자인 예시",
       desc: "패키지 디자인은 제품의 첫인상을 결정하고 구매를 유도합니다. 구조와 그래픽, 인쇄 후가공까지 함께 설계합니다.",
       scope: "구조 · 그래픽 · 목업",
@@ -228,7 +228,7 @@
     igfeed: {
       title: "SNS 콘텐츠",
       cat: "IG Feed Design",
-      img: "assets/images/proper/work-igfeed.png",
+      img: "assets/images/proper/work-igfeed.jpg",
       alt: "SNS 피드 디자인 예시",
       desc: "브랜드의 첫인상을 만드는 비주얼 콘텐츠. 일관된 톤과 포맷으로 피드를 하나의 매거진처럼 운영합니다.",
       scope: "콘텐츠 기획 · 촬영 · 디자인",
@@ -242,6 +242,33 @@
       desc: "오프라인에서 손에 쥐는 경험까지. 인쇄 매체의 물성과 정보 구조를 함께 디자인합니다.",
       scope: "편집 · 인쇄 · 후가공",
       deliverables: "브로슈어, 리플릿, 명함"
+    },
+    stayblis: {
+      title: "스테이블리스 콘텐츠",
+      cat: "Stayblis · IG Content",
+      img: "assets/images/proper/work-stayblis.jpg",
+      alt: "스테이블리스 숙소 인스타그램 콘텐츠 디자인 예시",
+      desc: "숙소 위탁운영과 인플루언서 협업을 함께 하는 스테이블리스 계정의 인스타그램 콘텐츠를 제작합니다. 숙소마다 다른 매력을 첫 장의 후킹 카피부터 마지막 장의 행동 유도까지 캐러셀 흐름으로 설계합니다.",
+      scope: "콘텐츠 기획 · 카피 · 캐러셀 디자인",
+      deliverables: "인스타그램 캐러셀 (1080×1350)"
+    },
+    general: {
+      title: "제너럴아이디어",
+      cat: "IG Feed Design",
+      img: "assets/images/proper/work-general.jpg",
+      alt: "제너럴아이디어 인스타그램 피드 디자인 예시",
+      desc: "모델 컷과 제품 컷을 번갈아 배치해 피드 전체가 하나의 룩북처럼 읽히도록 구성한 패션 브랜드 인스타그램 피드입니다.",
+      scope: "피드 기획 · 레이아웃 · 디자인",
+      deliverables: "피드 템플릿, 콘텐츠 세트"
+    },
+    law: {
+      title: "법률사무소 광고 시안",
+      cat: "Law Firm · IG Ad",
+      img: "assets/images/proper/work-law.jpg",
+      alt: "법률사무소 인스타그램 스토리·피드 광고 시안 모음",
+      desc: "개인회생·파산, 사기 피해금 회수 등 주제별로 소구점을 달리한 인스타그램 스토리·피드·캐러셀 광고 시안 모음입니다. 변호사 광고 규정을 고려해 문구를 설계했습니다.",
+      scope: "광고 기획 · 카피 · 스토리/피드/캐러셀 디자인",
+      deliverables: "스토리(9:16) · 피드(4:5) 광고 시안 다수"
     }
   };
 
@@ -266,6 +293,31 @@
     showModal(workModal);
   }
 
+  /* ---------- count-up (mobile stats) ---------- */
+
+  var counters = Array.prototype.slice.call(document.querySelectorAll("[data-count]"));
+  if (counters.length && "IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var countIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        countIO.unobserve(el);
+        var to = parseInt(el.getAttribute("data-count"), 10);
+        var start = null;
+        function tick(ts) {
+          if (start === null) start = ts;
+          var p = Math.min((ts - start) / 1100, 1);
+          var v = Math.round(to * (1 - Math.pow(1 - p, 3)));
+          el.textContent = v < 10 ? "0" + v : String(v);
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        el.textContent = "00";
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.6 });
+    counters.forEach(function (el) { countIO.observe(el); });
+  }
+
   /* ---------- portfolio preview ---------- */
 
   var rows = Array.prototype.slice.call(document.querySelectorAll(".portfolio__row"));
@@ -285,6 +337,14 @@
     capCat.textContent = row.querySelector("em").textContent;
     capIdx.textContent = (index < 10 ? "0" + index : index) + " / " + (rows.length < 10 ? "0" + rows.length : rows.length);
   }
+
+  document.querySelectorAll("[data-group-toggle]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var group = btn.closest("[data-group]");
+      var open = group.classList.toggle("is-open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  });
 
   rows.forEach(function (row) {
     row.addEventListener("mouseenter", function () {
@@ -314,7 +374,7 @@
   }
 
   function clearErrors() {
-    ["name", "phone", "email", "service", "message"].forEach(function (key) {
+    ["name", "phone", "email", "service", "message", "consent"].forEach(function (key) {
       setError(key, "");
     });
   }
@@ -355,6 +415,11 @@
     if (message.length < 10) {
       setError("message", "프로젝트 내용을 10자 이상 적어주세요.");
       firstInvalid = firstInvalid || data.message;
+    }
+
+    if (!data.consent.checked) {
+      setError("consent", "개인정보 수집·이용에 동의해 주세요.");
+      firstInvalid = firstInvalid || data.consent;
     }
 
     return { firstInvalid: firstInvalid, services: services };
