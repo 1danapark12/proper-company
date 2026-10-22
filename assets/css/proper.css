@@ -1087,6 +1087,16 @@ body.is-ready .hero__orb {
   border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 
+/* Leads the services section: no top rule, a divider below before the service intro. */
+.media-band--lead {
+  margin-top: 0;
+  margin-bottom: clamp(56px, 7vw, 84px);
+  padding-top: 0;
+  padding-bottom: clamp(40px, 5vw, 60px);
+  border-top: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
 .media-band__head {
   display: flex;
   flex-direction: column;
